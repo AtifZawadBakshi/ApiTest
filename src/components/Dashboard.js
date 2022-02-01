@@ -1,11 +1,15 @@
 import React from "react";
 import UserList from "./UserList";
 import Warehouse from "./Warehouse";
-import {removeUserSession, getUser} from "../utils/Common"
+import {removeUserSession, getUser, getToken} from "../utils/Common"
 
 const Dashboard = (props) =>{
 
     const user =getUser();
+
+    const handleAssign = () => {
+
+    }
 
     const handleLogout = () =>{
         removeUserSession();
@@ -25,6 +29,8 @@ const Dashboard = (props) =>{
             </div>
             <br/><br/>
             <div>
+            <input type="button" value='Confirm Assign' onClick={handleAssign}/>
+            <br/>
             <input type="button" value='Logout' onClick={handleLogout}/>
             </div>
         </>    

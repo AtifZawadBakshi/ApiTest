@@ -1,17 +1,36 @@
 import {React, useEffect, useState} from "react";
 import axios from "axios";
+import {getToken} from "../utils/Common";
 
 function Warehouse(){
 
     const[products,setProducts]=useState([]);
 
-    const apiLink ='https://10.100.17.47/FairEx/api/v1/admin/warehouse'
-    useEffect(()=>{
-        axios.get(apiLink)
-        .then(response=>{
-            setProducts(response)
+    const token= getToken();
+ 
+    axios.interceptors.request.use(
+        config =>{
+            config.headers.authorization= `Bearer ${token}`;
+            return config
+        }
+    )
+
+    // const apiLink ='https://10.100.17.47/FairEx/api/v1/admin/warehouse'
+    // useEffect(()=>{
+    //     axios.get(apiLink)
+    //     .then(response=>{
+    //         setProducts(response)
+    //     })
+    // },[apiLink])
+
+    const fetchData = () => {
+        axios.get('https://10.100.17.47/FairEx/api/v1/admin/warehouse')
+        .then((response) => {
+            console.log(response)
+            setProducts(response.data)
+            console.log(products)
         })
-    },[apiLink])
+    }
 
     // useEffect(()=>{
     //     fetch('https://10.100.17.47/FairEx/api/v1/admin/warehouse',
@@ -28,8 +47,8 @@ function Warehouse(){
         <div>
             Order Details from Warehouse:
             <br/>
-            {/* <select>
-                <option disable selected>---Select---</option>
+            <select onClick={fetchData}>
+                <option disable selected></option>
                 {
                     products.map((product)=>{
                         return( 
@@ -38,7 +57,7 @@ function Warehouse(){
                     })
                     
                 } 
-            </select> */}
+            </select>
         </div>
 
     )

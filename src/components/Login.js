@@ -16,11 +16,9 @@ const Login = (props) =>{
             email: email,
             password: password
         }).then(response => {
-            console.log(response)
-            console.log(response.data.user)
+            console.log(response);
             setLoading(false);
-            setUserSession(response.data.token, response.data.user)
-
+            setUserSession(response.data.access_token, response.data.user);
             props.history.push('/components/dashboard')
             // console.log('response >>> ',response)
         }).catch(error=>{
